@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Generative AI-Based Cloud Architecture Recommendation Framework
 ### (RAG for Startup Enterprises)
 
@@ -120,3 +121,7 @@ Interactive API docs are auto-generated at `http://localhost:8000/docs`.
 - The rules engine is intentionally simple and meant to be extended; it
   exists so the LLM has a consistent starting point rather than free-form
   reasoning over the full candidate space every time.
+=======
+# Cloud_Architecture_Project_2026
+GitHub repository for Cloud Architecture Project
+>>>>>>> origin/main
