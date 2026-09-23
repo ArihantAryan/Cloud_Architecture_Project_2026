@@ -1,11 +1,3 @@
-"""
-Calls Groq's free, OpenAI-compatible API to turn (startup profile + rule
-suggestions + retrieved knowledge-base context) into a final, structured
-architecture recommendation.
-
-Groq (https://console.groq.com) offers a genuinely free tier with no
-credit card required, serving fast open-weight models like Llama 3.3 70B.
-"""
 
 import json
 import re

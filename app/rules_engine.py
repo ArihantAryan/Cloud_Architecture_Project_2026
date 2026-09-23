@@ -1,12 +1,3 @@
-"""
-Lightweight heuristic rules layer.
-
-This narrows the space of candidate cloud services *before* handing things
-off to the RAG + LLM layer, so the final recommendation is grounded in
-consistent logic rather than left entirely to free-form generation. It also
-builds the natural-language query used to retrieve relevant knowledge-base
-passages.
-"""
 
 from dataclasses import dataclass, field
 from typing import List

@@ -1,24 +1,4 @@
-"""
-FastAPI backend for the Cloud Architecture Recommendation Framework.
 
-Run with:
-    uvicorn app.main:app --reload
-
-Then POST a startup profile to /recommend, e.g.:
-
-curl -X POST http://localhost:8000/recommend -H "Content-Type: application/json" -d '{
-  "company_stage": "seed",
-  "team_size": 4,
-  "monthly_budget_usd": 800,
-  "app_type": "web_app",
-  "expected_traffic": "unpredictable",
-  "handles_payments": true,
-  "handles_health_data": false,
-  "handles_eu_personal_data": false,
-  "preferred_provider": "aws",
-  "needs_global_low_latency": false
-}'
-"""
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field

@@ -1,13 +1,3 @@
-"""
-Retrieval-Augmented Generation pipeline.
-
-Responsibilities:
-1. Load + chunk the knowledge base markdown documents.
-2. Embed chunks with a local sentence-transformers model (no API key needed).
-3. Persist/reload a Chroma vector store.
-4. Retrieve the top-k most relevant chunks for a given query.
-"""
-
 from pathlib import Path
 from typing import List
 

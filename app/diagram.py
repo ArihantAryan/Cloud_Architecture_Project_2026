@@ -1,7 +1,4 @@
-"""
-Builds a simple Graphviz architecture diagram from the LLM's structured
-recommendation, so users get a visual alongside the text explanation.
-"""
+
 
 import graphviz
 
