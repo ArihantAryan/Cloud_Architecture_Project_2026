@@ -1,13 +1,4 @@
-"""
-Streamlit demo UI for the Cloud Architecture Recommendation Framework.
 
-Run with:
-    streamlit run streamlit_app.py
-
-This calls the pipeline directly (no need to run the FastAPI server separately),
-which is the simplest setup for a project demo. If you'd rather demo through
-the API, swap the direct calls below for `requests.post("http://localhost:8000/recommend", ...)`.
-"""
 
 import streamlit as st
 
