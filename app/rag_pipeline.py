@@ -15,7 +15,6 @@ def _get_embeddings() -> HuggingFaceEmbeddings:
 
 
 def load_and_chunk_documents(source_dir: Path = config.KNOWLEDGE_BASE_DIR) -> List[Document]:
-    """Load all markdown files from the knowledge base directory and split into chunks."""
     loader = DirectoryLoader(str(source_dir), glob="**/*.md", loader_cls=TextLoader)
     raw_docs = loader.load()
 
@@ -29,7 +28,6 @@ def load_and_chunk_documents(source_dir: Path = config.KNOWLEDGE_BASE_DIR) -> Li
 
 
 def build_vector_store(persist: bool = True) -> Chroma:
-    """Build (or rebuild) the Chroma vector store from the knowledge base documents."""
     chunks = load_and_chunk_documents()
     embeddings = _get_embeddings()
 
@@ -45,23 +43,22 @@ def build_vector_store(persist: bool = True) -> Chroma:
 
 
 def load_vector_store() -> Chroma:
-    """Load an already-built vector store from disk. Raises if it doesn't exist yet."""
+    
     if not config.VECTOR_STORE_DIR.exists():
         raise FileNotFoundError(
             f"No vector store found at {config.VECTOR_STORE_DIR}. "
-            "Run `python -m app.build_index` first."
+            
         )
     embeddings = _get_embeddings()
     return Chroma(persist_directory=str(config.VECTOR_STORE_DIR), embedding_function=embeddings)
 
 
 def retrieve(query: str, vector_store: Chroma, k: int = config.RETRIEVAL_TOP_K) -> List[Document]:
-    """Retrieve the top-k most relevant knowledge base chunks for a query."""
+    
     return vector_store.similarity_search(query, k=k)
 
 
 def format_context(chunks: List[Document]) -> str:
-    """Format retrieved chunks into a single context block for the LLM prompt, with sources."""
     formatted = []
     for i, chunk in enumerate(chunks, start=1):
         source = Path(chunk.metadata.get("source", "unknown")).name
