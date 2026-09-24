@@ -5,15 +5,15 @@ from typing import List
 
 @dataclass
 class StartupProfile:
-    company_stage: str          # "pre-seed", "seed", "series-a", "growth"
+    company_stage: str          
     team_size: int
     monthly_budget_usd: float
-    app_type: str                # "web_app", "mobile_backend", "ecommerce", "ml_workload", "saas_api"
-    expected_traffic: str        # "low", "unpredictable", "steady_moderate", "high_sustained"
+    app_type: str                
+    expected_traffic: str        
     handles_payments: bool = False
     handles_health_data: bool = False
     handles_eu_personal_data: bool = False
-    preferred_provider: str = "any"   # "aws", "azure", "gcp", "any"
+    preferred_provider: str = "any"   
     needs_global_low_latency: bool = False
 
 
@@ -30,7 +30,6 @@ class RuleSuggestion:
 def apply_rules(profile: StartupProfile) -> RuleSuggestion:
     suggestion = RuleSuggestion()
 
-    # --- Compute ---------------------------------------------------
     if profile.company_stage in ("pre-seed", "seed") or profile.expected_traffic == "unpredictable":
         suggestion.compute += ["serverless functions", "managed container service (scale-to-zero)"]
     elif profile.expected_traffic == "steady_moderate":
@@ -41,7 +40,6 @@ def apply_rules(profile: StartupProfile) -> RuleSuggestion:
     if profile.app_type == "ml_workload":
         suggestion.compute.append("managed ML platform (GPU-enabled) rather than serverless")
 
-    # --- Database ----------------------------------------------------
     if profile.app_type in ("web_app", "saas_api", "ecommerce"):
         suggestion.database.append("managed relational database with autoscaling tier")
     if profile.needs_global_low_latency or profile.expected_traffic == "high_sustained":
@@ -49,23 +47,20 @@ def apply_rules(profile: StartupProfile) -> RuleSuggestion:
     if profile.app_type == "mobile_backend":
         suggestion.database.append("NoSQL/document database (flexible schema, mobile SDK support)")
 
-    # --- Storage -----------------------------------------------------
     suggestion.storage.append("object storage with lifecycle policies for static/media assets")
     if profile.expected_traffic in ("steady_moderate", "high_sustained"):
         suggestion.storage.append("CDN in front of object storage / static assets")
 
-    # --- Networking ----------------------------------------------------
     suggestion.networking.append("managed API gateway for authentication, rate limiting, routing")
     if profile.expected_traffic in ("steady_moderate", "high_sustained"):
         suggestion.networking.append("managed load balancer across compute instances")
 
-    # --- DevOps -------------------------------------------------------
     suggestion.devops.append("managed CI/CD pipeline from first production deployment")
     if profile.team_size > 2:
         suggestion.devops.append("Infrastructure as Code (Terraform/CDK/Bicep)")
     suggestion.devops.append("centralized logging and basic uptime/error alerting")
 
-    # --- Compliance ----------------------------------------------------
+   
     if profile.handles_payments:
         suggestion.compliance_notes.append(
             "Offload card handling to a PCI-DSS compliant payment processor rather than storing card data directly."

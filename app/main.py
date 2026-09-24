@@ -13,7 +13,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-_vector_store = None  # lazy-loaded singleton
+_vector_store = None  
 
 
 class ProfileRequest(BaseModel):
@@ -45,11 +45,9 @@ def health():
 def recommend(req: ProfileRequest):
     profile = StartupProfile(**req.model_dump())
 
-    # 1. Rules layer narrows candidate services
     suggestion = apply_rules(profile)
     query = build_retrieval_query(profile, suggestion)
 
-    # 2. Retrieval layer pulls grounding context
     try:
         vector_store = _get_vector_store()
     except FileNotFoundError as exc:
@@ -58,7 +56,6 @@ def recommend(req: ProfileRequest):
     chunks = retrieve(query, vector_store)
     context = format_context(chunks)
 
-    # 3. Generation layer produces the final structured recommendation
     try:
         recommendation = generate_recommendation(profile, suggestion, context)
     except Exception as exc:
